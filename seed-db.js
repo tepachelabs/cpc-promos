@@ -1,11 +1,10 @@
-const { PrismaClient } = require('@prisma/client')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { PrismaClient } = require("@prisma/client");
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 function generateCode(min = 10000, max = 99999) {
-  return Math.floor(
-    Math.random() * (max - min + 1) + min
-  ).toString()
+  return Math.floor(Math.random() * (max - min + 1) + min).toString();
 }
 
 async function main() {
@@ -14,7 +13,7 @@ async function main() {
     "Perro vaquero",
     "Café mágico",
     "Cactus",
-    "Treintoker"
+    "Treintoker",
   ].map((name) => {
     return [
       generateCode(),
@@ -23,25 +22,27 @@ async function main() {
       generateCode(),
       generateCode(),
     ].map(async (token) => {
-      console.log(`Creating record (${ name }, ${ token });`)
+      console.log(`Creating record (${name}, ${token});`);
       return await prisma.sticker.create({
-        data: { name, token }
-      })
+        data: { name, token },
+      });
+    });
+  });
+  return Promise.all(promises)
+    .then(() => {
+      console.log("Done!");
     })
-  });
-  return Promise.all(promises).then(() => {
-    console.log("Done!");
-  }).catch((e) => {
-    console.log(e);
-  });
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

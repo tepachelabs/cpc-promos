@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import homeController from "./home.controller";
 import testController from "./test.controller";
 import registerController from "./register.controller";

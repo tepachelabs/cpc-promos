@@ -12,15 +12,15 @@ export const sendVerificationEmail = (email: string, link: string) => {
       templateId: VERIFICATION_EMAIL_ID,
       from: FROM_EMAIL,
       to: email,
-      dynamicTemplateData: { link }
+      dynamicTemplateData: { link },
     })
     .then(() => {
-      console.log('Email sent')
+      console.log("Email sent");
     })
     .catch((error) => {
-      console.error(error)
+      console.error(error);
     });
-}
+};
 
 export const sendStickerEmail = (email: string, token: string) => {
   sgMail
@@ -28,12 +28,12 @@ export const sendStickerEmail = (email: string, token: string) => {
       templateId: STICKER_EMAIL_ID,
       from: FROM_EMAIL,
       to: email,
-      dynamicTemplateData: { token }
+      dynamicTemplateData: { token },
     })
     .then(() => {
-      console.log('Email sent')
+      console.log("Email sent");
     })
     .catch((error) => {
-      console.error(error)
+      console.error(error);
     });
-}
+};
