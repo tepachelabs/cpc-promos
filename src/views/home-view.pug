@@ -1,0 +1,17 @@
+extends _layout
+
+block content
+    .container
+        .row
+            .column
+                h2 ¡Ganaste un sticker!
+                p Regístrate para recibir el código de canje en tu correo electrónico.
+        .row
+            .column
+                form(action='/register' method='POST')
+                    fieldset
+                        label(for='email') Email:
+                        input(type='email' name='email' id='email' value=email)
+                        input#subscription(type="checkbox" checked)
+                        label.label-inline Suscribirme a la lista de correos.
+                        input.button-primary(type='submit' value='Registrarme')

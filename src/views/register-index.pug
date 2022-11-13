@@ -1,0 +1,14 @@
+html
+    head
+        title Register
+    body
+        h1 Register
+        form(action='/register' method='POST')
+            div
+                label(for='email') Email:
+                input(type='email' name='email' id='email' value=email autofocus)
+            div
+                label(for='captcha') Captcha:
+                input(type='text' name='captcha' id='captcha' value="XGT09S" disabled)
+            div
+                input(type='submit' value='Register')

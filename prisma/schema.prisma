@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Claim {
+  id                    Int     @id @default(autoincrement())
+  email                 String  @unique
+  verificationToken     String  @unique
+  verified              Boolean @default(false)
+  createdAt             DateTime @default(now())
+  sticker               Sticker?
+}
+
+model Sticker {
+  id        Int     @id @default(autoincrement())
+  name      String
+  token     String
+  redeemed  Boolean @default(false)
+  claimed   Boolean @default(false)
+  claimId   Int?    @unique
+  claim     Claim?  @relation(fields: [claimId], references: [id])
+}
