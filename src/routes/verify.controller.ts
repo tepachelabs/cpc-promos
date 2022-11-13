@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+import { PATHS } from "../constants";
+import { prisma } from "../functions/prisma";
 import { sendStickerEmail } from "../functions/mailer";
 
 export const routes = Router();
-const prisma = new PrismaClient();
 
+/*
+ * POST /verify?token=...
+ */
 routes.get("/", async (req, res) => {
   const { token } = req.query;
 
@@ -32,8 +37,7 @@ routes.get("/", async (req, res) => {
     });
 
     sendStickerEmail(claim.email, sticker.token);
-
-    res.redirect("/verify/success");
+    res.redirect(PATHS.VERIFY_SUCCESS);
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
@@ -45,10 +49,6 @@ routes.get("/", async (req, res) => {
 
     res.status(405).json({ error: "Token doesn't exist!" });
   }
-});
-
-routes.get("/success", async (req, res) => {
-  res.render("verify-success", { title: "Verificado ☕️" });
 });
 
 export default routes;

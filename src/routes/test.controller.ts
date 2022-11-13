@@ -14,4 +14,8 @@ routes.get("/verified", (req, res) => {
   res.render("verify-success");
 });
 
+routes.get("/no-rewards", (req, res) => {
+  res.render("home-no-rewards");
+});
+
 export default routes;

@@ -2,7 +2,7 @@ import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
-const FROM_EMAIL = "Promos CPC <promos@cultoperrocafe.com>";
+const FROM_EMAIL = "Promos de Culto <promos@cultoperrocafe.com>";
 const VERIFICATION_EMAIL_ID = "d-8074d1b4c6b7412982559b3689bda9f1";
 const STICKER_EMAIL_ID = "d-be2967930db44559beb538a14f0f30b3";
 

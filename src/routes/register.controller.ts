@@ -1,14 +1,18 @@
 import { Router } from "express";
 import uniqid from "uniqid";
-import { PrismaClient } from "@prisma/client";
+
+import { PATHS } from "../constants";
+import { prisma } from "../functions/prisma";
 import { sendVerificationEmail } from "../functions/mailer";
 
 export const routes = Router();
-const prisma = new PrismaClient();
 
+/*
+ * POST /register
+ */
 routes.post("/", async (req, res) => {
-  const { email } = req.body;
   const host = req.get("host");
+  const { email } = req.body;
 
   try {
     const claim = await prisma.claim.create({
@@ -18,23 +22,13 @@ routes.post("/", async (req, res) => {
       },
     });
 
-    const link = `//${host}/verify?token=${claim.verificationToken}`;
+    const link = `https://${host}/verify?token=${claim.verificationToken}`;
     sendVerificationEmail(claim.email, link);
 
-    res.redirect("/register/success");
+    res.redirect(PATHS.REGISTER_SUCCESS);
   } catch (error) {
-    res.status(405).json({ error: "Email already exists" });
+    res.redirect(PATHS.REGISTER_ERROR);
   }
-});
-
-routes.get("/success", (req, res) => {
-  res.render("register-success", { title: "Listo ✅" });
-});
-
-routes.get("/done", (req, res) => {
-  const { email, token } = req.query;
-  sendVerificationEmail(email as string, token as string);
-  res.render("register-done", { token });
 });
 
 export default routes;
