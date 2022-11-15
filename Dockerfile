@@ -6,7 +6,7 @@ ARG PORT=$PORT
 # ENV NODE_ENV=production
 RUN npm install
 COPY . .
-RUN npm npx prisma generate
+RUN npx prisma generate
 RUN npm run build
 EXPOSE ${PORT}
 CMD [ "node", "dist/index.js" ]
