@@ -4,4 +4,5 @@ export const PATHS = {
   REGISTER_SUCCESS: "/registro-exitoso",
   REGISTER_ERROR: "/no-se-pudo-registrar",
   VERIFY_SUCCESS: "/verificacion-exitosa",
+  DASHBOARD: "/dashboard",
 };

@@ -23,27 +23,25 @@ routes.get("/", async (req, res) => {
       return res.status(405).json({ error: "Token doesn't exist!" });
     }
 
-    const sticker = await prisma.sticker.findFirst({
+    const reward = await prisma.reward.findFirst({
       where: { claimed: false },
     });
 
-    if (!sticker) {
-      return res.status(405).json({ error: "No more stickers!" });
+    if (!reward) {
+      return res.redirect(PATHS.HOME_NO_REWARDS);
     }
 
-    await prisma.sticker.update({
-      where: { id: sticker.id },
+    await prisma.reward.update({
+      where: { id: reward.id },
       data: { claimId: claim.id, claimed: true },
     });
 
-    sendStickerEmail(claim.email, sticker.token);
+    sendStickerEmail(claim.email, reward.token as string);
     res.redirect(PATHS.VERIFY_SUCCESS);
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        return res
-          .status(405)
-          .json({ error: "Email already received sticker" });
+        return res.status(405).json({ error: "Email already received reward" });
       }
     }
 

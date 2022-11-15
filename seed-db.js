@@ -8,12 +8,15 @@ function generateCode(min = 10000, max = 99999) {
 }
 
 async function main() {
+  console.log("🌱 Seeding database...");
+
   const promises = [
-    "Perro feliz",
-    "Perro vaquero",
-    "Café mágico",
-    "Cactus",
-    "Treintoker",
+    "Sticker: perro feliz",
+    "Sticker: café mágico",
+    "Sticker: Treintoker",
+    "Pin: Cactus",
+    "Bebida sin costo",
+    "Bebida sin costo",
   ].map((name) => {
     return [
       generateCode(),
@@ -22,15 +25,15 @@ async function main() {
       generateCode(),
       generateCode(),
     ].map(async (token) => {
-      console.log(`Creating record (${name}, ${token});`);
-      return await prisma.sticker.create({
+      console.log(`  🎁 Adding reward "${name}" with code ${token});`);
+      return await prisma.reward.create({
         data: { name, token },
       });
     });
   });
   return Promise.all(promises)
     .then(() => {
-      console.log("Done!");
+      console.log("✅ Done!");
     })
     .catch((e) => {
       console.log(e);

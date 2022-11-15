@@ -1,0 +1,34 @@
+extends _layout
+
+block content
+  .frame
+    .container
+      .row
+        .column
+          h2 Verifica cupón
+          p El cupón es un código de 5 dígitos que se envía al correo electrónico registrado.
+      .row
+        .column
+          form(action="/dashboard" method="GET")
+            fieldset
+              label(for="code") Código:
+              input(type="number" name="code" id="code" placeholder="Código de 5 dígitos...")
+              input.button-primary(type="submit" value="Verificar")
+      if promo
+        .row
+          .column
+            h4 Resultado de la verificación
+            table
+              tbody
+                tr
+                  td Código
+                  td= promo.token
+                tr
+                  td Recompensa
+                  td= promo.name
+                tr
+                  td Estado
+                  td= promo.redeemed ? 'Reclamado' : 'Sin reclamar'
+                tr
+                  td(colspan="2")
+                    a.button(href="/dashboard?code=" + promo.token) Reclamado
