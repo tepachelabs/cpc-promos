@@ -5,7 +5,7 @@ COPY package*.json ./
 ARG PORT=$PORT
 ENV NODE_ENV=production
 RUN npm install
-RUN npm run build
+RUN npx tsc
 COPY . .
 EXPOSE ${PORT}
 CMD [ "node", "dist/index.js" ]
