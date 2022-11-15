@@ -1,8 +1,7 @@
 import { Router } from "express";
-import { Prisma } from "@prisma/client";
 
 import { PATHS } from "../constants";
-import { prisma } from "../functions/prisma";
+import { prisma, PrismaClientKnownRequestError } from "../functions/prisma";
 import { sendStickerEmail } from "../functions/mailer";
 
 export const routes = Router();
@@ -39,7 +38,7 @@ routes.get("/", async (req, res) => {
     sendStickerEmail(claim.email, reward.token as string);
     res.redirect(PATHS.VERIFY_SUCCESS);
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    if (e instanceof PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
         return res.status(405).json({ error: "Email already received reward" });
       }
