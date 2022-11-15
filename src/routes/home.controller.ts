@@ -9,8 +9,7 @@ export const routes = Router();
  * GET PATHS.HOME
  */
 routes.get(PATHS.HOME, (req, res) => {
-  const email = uniqid.time("test-", "@tonymtz.com");
-  res.render("home-view", { title: "Hola 👋", email });
+  res.render("home-view", { title: "Hola 👋" });
 });
 
 /*
