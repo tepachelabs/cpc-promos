@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 ARG PORT=$PORT
 ENV NODE_ENV=production
+RUN npm build
 RUN npm install
 COPY . .
 EXPOSE ${PORT}
