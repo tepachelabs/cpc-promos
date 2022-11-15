@@ -7,4 +7,4 @@ export const PATHS = {
   DASHBOARD: "/dashboard",
 };
 
-export const HOST = process.env.SENDGRID_API_KEY || "http://localhost:3000";
+export const HOST = process.env.HOST || "http://localhost:3000";
