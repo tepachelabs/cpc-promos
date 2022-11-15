@@ -1,7 +1,7 @@
 import { Router } from "express";
 import uniqid from "uniqid";
 
-import { PATHS } from "../constants";
+import { HOST, PATHS } from "../constants";
 import { prisma } from "../functions/prisma";
 import { sendVerificationEmail } from "../functions/mailer";
 
@@ -11,7 +11,6 @@ export const routes = Router();
  * POST /register
  */
 routes.post("/", async (req, res) => {
-  const host = req.get("host");
   const { email } = req.body;
 
   try {
@@ -22,7 +21,7 @@ routes.post("/", async (req, res) => {
       },
     });
 
-    const link = `https://${host}/verify?token=${claim.verificationToken}`;
+    const link = `${HOST}/verify?token=${claim.verificationToken}`;
     sendVerificationEmail(claim.email, link);
 
     res.redirect(PATHS.REGISTER_SUCCESS);

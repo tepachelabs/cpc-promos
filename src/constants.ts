@@ -6,3 +6,5 @@ export const PATHS = {
   VERIFY_SUCCESS: "/verificacion-exitosa",
   DASHBOARD: "/dashboard",
 };
+
+export const HOST = process.env.SENDGRID_API_KEY || "http://localhost:3000";
