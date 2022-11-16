@@ -14,25 +14,39 @@ block content
               label(for="code") Código:
               input(type="number" name="code" id="code" placeholder="Código de 5 dígitos..."  value=code)
               input.button-primary(type="submit" value="Verificar")
+      if status
+        .row
+          .column
+            blockquote
+              if status == "success"
+                p Código reclamado ✅
+              else
+                p Hubo un error al reclamar el código ❌
       if code
         .row
           .column
             h4 Resultado de la verificación
-            if promo
+            if reward
               table
                 tbody
                   tr
                     td Código
                     td
-                      b= promo.token
+                      b= reward.token
                   tr
                     td Recompensa
-                    td= promo.name
+                    td
+                      b= reward.name
                   tr
                     td Estado
-                    td= promo.redeemed ? 'Reclamado' : 'Sin reclamar'
-                  tr
-                    td(colspan="2")
-                      a.button(href="/dashboard?code=" + promo.token) Reclamado
+                    td
+                      b= reward.redeemed ? 'Reclamado' : 'Sin reclamar'
+                  unless reward.redeemed
+                    tr
+                      td(colspan="2")
+                        form(action="/dashboard" method="POST")
+                          input(type="hidden" name="code" value=reward.token)
+                          input.button-primary(type="submit" value="Reclamado")
             else
-              p El código no existe o ya fue reclamado.
+              p
+                b El código no existe ❌

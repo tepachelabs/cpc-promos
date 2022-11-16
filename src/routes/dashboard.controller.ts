@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { prisma } from "../functions/prisma";
 import { sendRewardEmail } from "../functions/mailer";
+import { PATHS } from "../constants";
 
 export const routes = Router();
 
@@ -8,18 +9,37 @@ export const routes = Router();
  * GET PATHS.HOME
  */
 routes.get("/", async (req, res) => {
-  const { code } = req.query;
-  let promo;
+  const { code, status } = req.query;
+  let reward;
 
   if (code) {
-    promo = await prisma.reward.findUnique({
+    reward = await prisma.reward.findUnique({
       where: {
         token: code as string,
       },
     });
   }
 
-  res.render("dashboard", { code, promo });
+  res.render("dashboard", { code, reward, status });
+});
+
+/*
+ * POST PATHS.HOME
+ */
+routes.post("/", async (req, res) => {
+  const { code } = req.body;
+
+  try {
+    await prisma.reward.update({
+      where: { token: code },
+      data: { redeemed: true },
+    });
+
+    res.redirect(`${PATHS.DASHBOARD}?status=success`);
+  } catch (e) {
+    console.error(e);
+    res.redirect(`${PATHS.DASHBOARD}?status=failure`);
+  }
 });
 
 /*

@@ -10,7 +10,7 @@ export const routes = Router();
 const DEFAULT_REWARD = "Café del día gratis";
 
 /*
- * POST /verify?token=...
+ * GET /verify?token=...
  */
 routes.get("/", async (req, res) => {
   const { token } = req.query;
