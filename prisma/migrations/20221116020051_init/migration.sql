@@ -2,7 +2,7 @@
 CREATE TABLE "Claim" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
-    "verificationToken" TEXT NOT NULL,
+    "verificationToken" TEXT,
     "verified" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -17,6 +17,8 @@ CREATE TABLE "Reward" (
     "redeemed" BOOLEAN NOT NULL DEFAULT false,
     "claimed" BOOLEAN NOT NULL DEFAULT false,
     "claimId" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Reward_pkey" PRIMARY KEY ("id")
 );
