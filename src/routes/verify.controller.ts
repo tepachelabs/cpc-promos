@@ -2,9 +2,12 @@ import { Router } from "express";
 
 import { PATHS } from "../constants";
 import { prisma, PrismaClientKnownRequestError } from "../functions/prisma";
-import { sendStickerEmail } from "../functions/mailer";
+import { sendRewardEmail } from "../functions/mailer";
+import { generateCode } from "../functions/generate-code";
 
 export const routes = Router();
+
+const DEFAULT_REWARD = "Café del día gratis";
 
 /*
  * POST /verify?token=...
@@ -22,20 +25,27 @@ routes.get("/", async (req, res) => {
       return res.status(405).json({ error: "Token doesn't exist!" });
     }
 
-    const reward = await prisma.reward.findFirst({
+    let reward = await prisma.reward.findFirst({
       where: { claimed: false },
     });
 
-    if (!reward) {
-      return res.redirect(PATHS.HOME_NO_REWARDS);
+    if (reward) {
+      reward = await prisma.reward.update({
+        where: { id: reward.id },
+        data: { claimId: claim.id, claimed: true },
+      });
+    } else {
+      reward = await prisma.reward.create({
+        data: {
+          name: DEFAULT_REWARD,
+          token: generateCode(),
+          claimId: claim.id,
+          claimed: true,
+        },
+      });
     }
 
-    await prisma.reward.update({
-      where: { id: reward.id },
-      data: { claimId: claim.id, claimed: true },
-    });
-
-    sendStickerEmail(claim.email, reward.token as string);
+    sendRewardEmail(claim.email, reward.token as string);
     res.redirect(PATHS.VERIFY_SUCCESS);
   } catch (e) {
     if (e instanceof PrismaClientKnownRequestError) {

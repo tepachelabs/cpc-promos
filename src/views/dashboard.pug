@@ -12,23 +12,27 @@ block content
           form(action="/dashboard" method="GET")
             fieldset
               label(for="code") Código:
-              input(type="number" name="code" id="code" placeholder="Código de 5 dígitos...")
+              input(type="number" name="code" id="code" placeholder="Código de 5 dígitos..."  value=code)
               input.button-primary(type="submit" value="Verificar")
-      if promo
+      if code
         .row
           .column
             h4 Resultado de la verificación
-            table
-              tbody
-                tr
-                  td Código
-                  td= promo.token
-                tr
-                  td Recompensa
-                  td= promo.name
-                tr
-                  td Estado
-                  td= promo.redeemed ? 'Reclamado' : 'Sin reclamar'
-                tr
-                  td(colspan="2")
-                    a.button(href="/dashboard?code=" + promo.token) Reclamado
+            if promo
+              table
+                tbody
+                  tr
+                    td Código
+                    td
+                      b= promo.token
+                  tr
+                    td Recompensa
+                    td= promo.name
+                  tr
+                    td Estado
+                    td= promo.redeemed ? 'Reclamado' : 'Sin reclamar'
+                  tr
+                    td(colspan="2")
+                      a.button(href="/dashboard?code=" + promo.token) Reclamado
+            else
+              p El código no existe o ya fue reclamado.

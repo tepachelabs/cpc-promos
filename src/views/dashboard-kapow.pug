@@ -1,0 +1,11 @@
+extends _layout
+
+block content
+  .frame
+    .container
+      .row
+        .column
+          h2 Emails enviados
+          ul
+            each email in emails
+              li= email

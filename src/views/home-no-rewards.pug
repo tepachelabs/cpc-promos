@@ -7,17 +7,10 @@ block content
         .column
           h2 Ya volaron 🕊️
           p Entendemos que es triste que se hayan acabado las promos, pero no te preocupes, pronto habrá más.
-          p Que no se te pasen, síguenos en nuestras redes sociales para enterarte de las nuevas promos. Suscríbete para recibir las promos en tu correo.
-      .row
-        .column
-          form(action="/register" method="POST")
-            fieldset
-              label(for="email") Correo:
-              input(type="email" name="email" id="email" placeholder="Tu correo..." value=email)
-              input.button-primary(type="submit" value="Registrarme")
-      .row
-        .column
-          p Al registrarte aceptas nuestros&nbsp;
-            a(href="/terms") términos & condiciones.&nbsp;
-            | Consulta la&nbsp;
-            a(href="/privacy") política de privacidad.
+          p Te enviaremos un correo cuando haya más promos disponibles. Mientras tanto, puedes seguirnos en nuestras redes:
+          ul
+            for social in ['instagram', 'facebook', 'twitter']
+              li
+                a(href=`https://${social}.com/cultoperrocafe` target="_blank" rel="noopener noreferrer")= social[0].toUpperCase() + social.slice(1)
+            li
+              a(href="https://tiktok.com/@cultoperrocafe" target="_blank" rel="noopener noreferrer") Tiktok
