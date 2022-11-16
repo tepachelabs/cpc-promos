@@ -40,4 +40,11 @@ routes.get(PATHS.VERIFY_SUCCESS, async (req, res) => {
   res.render("verify-success", { title: "Verificado ☕️" });
 });
 
+/*
+ * GET PATHS.VERIFY_BAD_TOKEN
+ */
+routes.get(PATHS.VERIFY_BAD_TOKEN, async (req, res) => {
+  res.render("verify-error", { title: "❌" });
+});
+
 export default routes;

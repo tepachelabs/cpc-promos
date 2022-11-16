@@ -22,7 +22,8 @@ routes.get("/", async (req, res) => {
     });
 
     if (!claim) {
-      return res.status(405).json({ error: "Token doesn't exist!" });
+      console.error("[ERROR] Tried to verify a token that doesn't exist");
+      return res.redirect(PATHS.VERIFY_BAD_TOKEN);
     }
 
     let reward = await prisma.reward.findFirst({
@@ -48,13 +49,15 @@ routes.get("/", async (req, res) => {
     sendRewardEmail(claim.email, reward.token as string);
     res.redirect(PATHS.VERIFY_SUCCESS);
   } catch (e) {
+    console.error(e);
+
     if (e instanceof PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
         return res.status(405).json({ error: "Email already received reward" });
       }
     }
 
-    res.status(405).json({ error: "Token doesn't exist!" });
+    return res.redirect(PATHS.VERIFY_BAD_TOKEN);
   }
 });
 
