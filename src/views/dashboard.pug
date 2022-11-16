@@ -12,7 +12,7 @@ block content
           form(action="/dashboard" method="GET")
             fieldset
               label(for="code") Código:
-              input(type="number" name="code" id="code" placeholder="Código de 5 dígitos..."  value=code)
+              input(type="number" name="code" id="code" placeholder="Código de 5 dígitos..."  value=code min="0" inputmode="numeric" pattern="[0-9]*")
               input.button-primary(type="submit" value="Verificar")
       if status
         .row
