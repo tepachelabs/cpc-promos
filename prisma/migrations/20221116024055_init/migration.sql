@@ -5,6 +5,7 @@ CREATE TABLE "Claim" (
     "verificationToken" TEXT,
     "verified" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Claim_pkey" PRIMARY KEY ("id")
 );
@@ -18,7 +19,7 @@ CREATE TABLE "Reward" (
     "claimed" BOOLEAN NOT NULL DEFAULT false,
     "claimId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Reward_pkey" PRIMARY KEY ("id")
 );

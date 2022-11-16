@@ -16,6 +16,7 @@ model Claim {
   verificationToken     String?   @unique
   verified              Boolean   @default(false)
   createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @default(now()) @updatedAt
   reward                Reward?
 }
 
@@ -28,5 +29,5 @@ model Reward {
   claimId   Int?      @unique
   claim     Claim?    @relation(fields: [claimId], references: [id])
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  updatedAt DateTime  @default(now()) @updatedAt
 }
