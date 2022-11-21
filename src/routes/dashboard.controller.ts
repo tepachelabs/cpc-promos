@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../functions/prisma";
-import { sendRewardEmail } from "../functions/mailer";
+import { sendRewardEmail, sendSaleEmail } from "../functions/mailer";
 import { PATHS } from "../constants";
 
 export const routes = Router();
@@ -73,7 +73,7 @@ routes.get("/kapow", async (req, res) => {
       data: { claimId: claim.id, claimed: true },
     });
 
-    sendRewardEmail(claim.email, reward.token as string);
+    sendSaleEmail(claim.email, reward.token as string);
   }
 
   const emails = unverifiedClaims.map((claim) => claim.email);
